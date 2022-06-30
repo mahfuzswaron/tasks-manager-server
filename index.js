@@ -29,9 +29,21 @@ const run = async () => {
                 $set: task
             }
             const result = await tasksCollection.updateOne({ _id: id }, doc, { upsert: true });
-            console.log(id, task, result)
             res.send(result);
         })
+
+        app.put('/complete', async (req, res) => {
+            const id = ObjectId(req.headers.id);
+            const doc = {
+                $set: {
+                    status: 'completed'
+                }
+            }
+            const result = await tasksCollection.updateOne({ _id: id }, doc, { upsert: true });
+            console.log(result)
+            res.send(result);
+        })
+
 
     }
     finally {
