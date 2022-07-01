@@ -23,7 +23,7 @@ const run = async () => {
         })
 
         app.put('/addoredit', async (req, res) => {
-            const id = ObjectId(req.headers.id);
+            const id = await ObjectId(req.headers.id);
             const task = req.body;
             const doc = {
                 $set: task
@@ -33,14 +33,14 @@ const run = async () => {
         })
 
         app.put('/complete', async (req, res) => {
-            const id = ObjectId(req.headers.id);
+            const id = await ObjectId(req.headers.id);
             const doc = {
                 $set: {
                     status: 'completed'
                 }
             }
             const result = await tasksCollection.updateOne({ _id: id }, doc, { upsert: true });
-            console.log(result)
+            // console.log(result)
             res.send(result);
         })
 
